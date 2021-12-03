@@ -1,0 +1,25 @@
+1. Consume input message [Message(key:Int = 1, value: String = "hello", index: Int)]
+2. Enrich input message [Message(key:Int = 1, value: String = "hello", index: Int = 10)]
+3. Validate input message
+if (index % 2 == 0) => valid else invalid
+4. Valid messages => validate_msg_table, invalid message => error_table
+
+Consumer {
+
+  cosumer:
+  ..
+  process(msg)
+  ..
+
+
+  process(msg) {
+  enrichedMsg = enricher.enrich(msg)
+  (validMsg, error) = validator.validate(enrichedMsg)
+
+  validMsgBatch
+  errorMsgBatch
+
+  repo.save(validMsgBatch)
+  errorRepo.save(errorMsgBatch)
+  }
+}
